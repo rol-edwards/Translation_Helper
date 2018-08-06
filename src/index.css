@@ -1,0 +1,59 @@
+body {
+  font: 14px "Century Gothic", Futura, sans-serif;
+  margin: 20px;
+}
+
+ol, ul {
+  padding-left: 30px;
+}
+
+h1 {
+  color: red;
+}
+
+td {
+  width: 200px;
+  font-size: 1em;
+  height: 50px;
+
+}
+
+button p {
+  margin: 2px;
+}
+
+button p:nth-child(2) {
+  color: blue;
+}
+
+.translation {
+  background-color: lightblue;
+}
+
+.part {
+  background-color: lightgreen;
+}
+
+.control {
+  background-color: white;
+  margin: 1px;
+  
+  border-color: #D3D3D3;
+  border-width: 1px;
+  border-style: solid;
+  padding: 20px;
+
+}
+
+.text {
+  margin: 50px;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.input {
+  width: 401px;
+  height: 154px;
+}
