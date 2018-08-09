@@ -19,6 +19,8 @@ class Word extends React.Component {
 				<button onClick={() => this.focusPanel()}>
 				<p>{this.props.word.word}</p>
 				<p>{this.props.word.translation}</p>
+				<p>{this.props.word.part_of_speech}</p>
+				<p>{this.props.word.notes}</p>
 				</button>
 			)
 		}
@@ -83,7 +85,7 @@ class Translation extends React.Component {
 		}
 		else {
 			 words_element = (
-				<div>
+				<div class='button'>
 					<div class='text'>
 						{words}
 					</div>
@@ -161,6 +163,7 @@ class ControlPanel extends React.Component {
 						<td><label for='part'>Part of speech</label></td>
 						<td>
 							<select id='part' onChange={this.changePart} value={word.part_of_speech}>
+								<option>Select</option>
 								<option value='noun'>Noun</option>
 								<option value='verb'>Verb</option>
 								<option value='adjective'>Adjective</option>
@@ -226,9 +229,9 @@ class Text extends React.Component{
 	}
 	render(){
 		return(
-			<div>
+			<div class='input_div'>
 				<div>
-					<h2>Please enter text you are translating</h2>
+					<p>Please enter text you are translating:</p>
 				</div>
 				<div>
 					<textarea class='input' id='input' onChange={this.parseText}></textarea>
@@ -255,7 +258,7 @@ class NewVocabList extends React.Component {
 			vocab.push(<p>{word.word} {word.count}</p>)
 		})
 		return (
-			<div>
+			<div class='new_vocab'>
 				<h2>To Learn:</h2>
 				{vocab}
 			</div>
@@ -349,7 +352,7 @@ class Page extends React.Component {
 		var new_vocab = [];
 		
 		for (var i = 0; i < parsed.length; i ++){
-			var stats = {key: i, word: parsed[i], translation: parsed[i], part_of_speech: 'noun', display: 'word', notes: '', root: ''};
+			var stats = {key: i, word: parsed[i], translation: '', part_of_speech: '', display: 'word', notes: '', root: ''};
 			new_vocab.push(stats);
 		}
 		this.setState({vocab: new_vocab})
@@ -416,17 +419,22 @@ class Page extends React.Component {
 		}
 		return (
 			<div>
-				<h1>Translation Helper</h1>
+				<div class='top'>
+					<div>
+						<p class='menu'>LOGIN</p>
+					</div>
+					<div>
+						<h1>TRANSLATION HELPER</h1>
+					</div>
+					<div>	
+						<p class='menu'>MENU</p>
+					</div>
+				</div>
 				<Text
 					onChange={this.parseText}
 					onClick={this.rToL}
 				/>
-				<Translation 
-					vocab={this.state.vocab}
-					focusPanel={this.focusPanel}
-					r2l={this.state.r2l}
-				/>
-					<ControlPanel
+				<ControlPanel
 					word={this.state.panel_word}
 					onChange={this.changePart}
 					onTranslate={this.translate}
@@ -434,6 +442,11 @@ class Page extends React.Component {
 					onNotes={this.changeNotes}
 					learnWord={this.learnWord}
 					/>
+				<Translation 
+					vocab={this.state.vocab}
+					focusPanel={this.focusPanel}
+					r2l={this.state.r2l}
+				/>
 				<NewVocabList
 					vocab={this.state.to_learn}
 				/>

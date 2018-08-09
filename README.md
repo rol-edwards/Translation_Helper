@@ -6,7 +6,7 @@ The user pastes text they wish to translate. They can then add their translation
 
 The app keeps count of how many instances of a given word are clicked on; the idea would be to automatically generate a short vocab list of the most frequently occurring new words, so that the user prioritises learning vocab most relevant to the kind of documents they want to translate. 
 
-The direction of the text can be flipped, for Ararbic, for example. 
+The direction of the text can be flipped, for Arabic, for example. 
 
 
 
