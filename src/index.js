@@ -5,7 +5,12 @@ import './index.css';
 class Word extends React.Component {
 	constructor(props){
 		super(props);
-		this.focusPanel = this.focusPanel.bind(this)
+		this.focusPanel = this.focusPanel.bind(this);
+		this.drag = this.drag.bind(this);
+	}
+
+	drag (ev){	
+		this.props.drag(ev)
 	}
 
 	focusPanel () {
@@ -16,7 +21,7 @@ class Word extends React.Component {
 		var word = this.props.word;
 		if (word.display == 'word'){
 			return (
-				<button onClick={() => this.focusPanel()}>
+				<button id={word.key} onClick={() => this.focusPanel()} draggable="true" onDragStart={this.drag}>
 				<p>{this.props.word.word}</p>
 				<p>{this.props.word.translation}</p>
 				<p>{this.props.word.part_of_speech}</p>
@@ -68,6 +73,7 @@ class Translation extends React.Component {
 			words.push(<Word 
 				word={this.props.vocab[i]}
 				onClick={this.props.focusPanel}
+				drag={this.props.drag}
 				/>)
 		};
 
@@ -109,11 +115,11 @@ class ControlPanel extends React.Component {
 	//props: panel_word
 	constructor(props){
 		super(props);
-		this.changePart = this.changePart.bind(this)
-		this.translate = this.translate.bind(this)
-		this.changeDisplay = this.changeDisplay.bind(this)
-		this.changeNotes = this.changeNotes.bind(this)
-		this.learnWord = this.learnWord.bind(this)
+		this.changePart = this.changePart.bind(this);
+		this.translate = this.translate.bind(this);
+		this.changeDisplay = this.changeDisplay.bind(this);
+		this.changeNotes = this.changeNotes.bind(this);
+		this.learnWord = this.learnWord.bind(this);
 	};
 
 	changePart(event) {
@@ -216,8 +222,8 @@ class SelectPanel extends React.Component{
 class Text extends React.Component{
 	constructor(props){
 		super(props);
-		this.parseText = this.parseText.bind(this)
-		this.rToL = this.rToL.bind(this)
+		this.parseText = this.parseText.bind(this);
+		this.rToL = this.rToL.bind(this);
 	}
 
 	rToL(){
@@ -284,14 +290,17 @@ class Page extends React.Component {
 			
 		}
 
-		this.focusPanel = this.focusPanel.bind(this)
-		this.changePart = this.changePart.bind(this)
-		this.translate = this.translate.bind(this)
-		this.changeNotes = this.changeNotes.bind(this)
-		this.changeDisplay = this.changeDisplay.bind(this)
-		this.parseText = this.parseText.bind(this)
-		this.rToL = this.rToL.bind(this)
-		this.learnWord = this.learnWord.bind(this)
+		this.focusPanel = this.focusPanel.bind(this);
+		this.changePart = this.changePart.bind(this);
+		this.translate = this.translate.bind(this);
+		this.changeNotes = this.changeNotes.bind(this);
+		this.changeDisplay = this.changeDisplay.bind(this);
+		this.parseText = this.parseText.bind(this);
+		this.rToL = this.rToL.bind(this);
+		this.learnWord = this.learnWord.bind(this);
+		this.allowDrop = this.allowDrop.bind(this);
+		this.drag = this.drag.bind(this);
+		this.drop = this.drop.bind(this);
 
 	}
 	
@@ -395,6 +404,20 @@ class Page extends React.Component {
 	selectOff(){
 		this.setState({select_range: [], select_state: 'off'})
 	}
+
+	 allowDrop(ev) {
+    ev.preventDefault();
+}
+
+ drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+ drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}
 	render () {
 		var control = [];
 		if (this.state.select_state == 'end'){
@@ -442,11 +465,25 @@ class Page extends React.Component {
 					onNotes={this.changeNotes}
 					learnWord={this.learnWord}
 					/>
+
 				<Translation 
+					drag={this.drag}
 					vocab={this.state.vocab}
 					focusPanel={this.focusPanel}
 					r2l={this.state.r2l}
 				/>
+				<div class="div1" onDrop={this.drop} onDragOver={this.allowDrop}></div>
+
+				<div class="div1" onDrop={this.drop} onDragOver={this.allowDrop}></div>
+				<div class="div1" onDrop={this.drop} onDragOver={this.allowDrop}></div>
+				<div class="div1" onDrop={this.drop} onDragOver={this.allowDrop}></div>
+				<div class="div1" onDrop={this.drop} onDragOver={this.allowDrop}></div>
+				<div class="div1" onDrop={this.drop} onDragOver={this.allowDrop}></div>
+				<div class="div1" onDrop={this.drop} onDragOver={this.allowDrop}></div>
+				<div class="div1" onDrop={this.drop} onDragOver={this.allowDrop}></div>
+				<div class="div1" onDrop={this.drop} onDragOver={this.allowDrop}></div>
+				<div class="div1" onDrop={this.drop} onDragOver={this.allowDrop}></div>
+				
 				<NewVocabList
 					vocab={this.state.to_learn}
 				/>
